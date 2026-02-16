@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm install --legacy-peer-deps typescript --save-dev && npm run build",
+  "buildCommand": "NEXT_PRIVATE_TURBOPACK_DISABLED=1 npm install --legacy-peer-deps typescript --save-dev && NEXT_PRIVATE_TURBOPACK_DISABLED=1 npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install --legacy-peer-deps",
   "framework": "nextjs",
