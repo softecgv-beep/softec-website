@@ -1,0 +1,104 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║              🚀 RESUMO - DEPLOY SOFTEC (softecgv.pt)                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+SEUS DADOS (JÁ CONFIGURADOS):
+─────────────────────────────────────────────────────────────────────────────
+Site:     https://www.softecgv.pt
+Banco:    u520816751_Y7X2I
+Usuário:  u520816751_BOXVi
+Senha:    Softec2026@@
+
+
+PASSO 1: Configurar Banco (phpMyAdmin)
+─────────────────────────────────────────────────────────────────────────────
+1. hPanel > Databases > MySQL Databases
+2. Clique em "Manage" no banco: u520816751_Y7X2I
+3. Aba "SQL"
+4. ABRA o arquivo: database-setup.sql
+5. Copie todo o conteúdo
+6. Cole no phpMyAdmin
+7. Clique em "Go"
+✅ Pronto!
+
+
+PASSO 2: Criar Email (hPanel)
+─────────────────────────────────────────────────────────────────────────────
+1. hPanel > Emails > Create Email Account
+2. Crie: contato@softecgv.pt (ou outro)
+3. Anote o email e senha criados
+4. ATUALIZE o arquivo .env.production:
+   - Substitua: seu-email@softecgv.pt
+   - Substitua: sua-senha-de-email
+
+
+PASSO 3: Upload dos Arquivos (File Manager)
+─────────────────────────────────────────────────────────────────────────────
+Vá para: public_html
+
+Fazer upload das 3 PASTAS (inteiras):
+✅ src/
+✅ prisma/
+✅ public/
+
+Fazer upload dos ARQUIVOS:
+✅ .env.production    ← JÁ COM DADOS DO BANCO!
+✅ .htaccess
+✅ next.config.ts
+✅ package.json
+✅ package-lock.json
+✅ tsconfig.json
+
+
+PASSO 4: Rodar Comandos (Terminal)
+─────────────────────────────────────────────────────────────────────────────
+Copie e cole no Terminal do hPanel:
+
+cd public_html
+npm install
+mv prisma/schema-mysql.prisma prisma/schema.prisma
+npm install @prisma/adapter-mysql
+npx prisma generate
+mkdir -p public/uploads/curriculos
+chmod 755 public/uploads
+npm install -g pm2
+pm2 start npm --name "softec" -- start
+pm2 save
+pm2 startup
+
+✅ Após o último comando, copie e cole o comando que aparecer!
+
+
+PASSO 5: Testar
+─────────────────────────────────────────────────────────────────────────────
+1. Acesse: https://www.softecgv.pt
+2. Teste o formulário de candidaturas
+3. Verifique se recebeu o email
+
+🎉 PRONTO! Site no ar!
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                    ARQUIVOS PRONTOS PARA USAR                           ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+✅ .env.production              ← Configurado com seu banco!
+✅ database-setup.sql           ← Script para o phpMyAdmin
+✅ DEPLOY_FINAL_SOFTEC.txt      ← Guia completo detalhado
+✅ RESUMO_FINAL.txt             ← Este arquivo rápido
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                    COMANDOS ÚTEIS                                       ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Ver status:     pm2 status
+Ver logs:       pm2 logs softec
+Reiniciar:      pm2 restart softec
+Parar:          pm2 stop softec
+
+
+═══════════════════════════════════════════════════════════════════════════
+   BOA SORTE! SEU SITE SOFTEC ESTÁ PRONTO PARA IR AO AR! 🚀
+═══════════════════════════════════════════════════════════════════════════

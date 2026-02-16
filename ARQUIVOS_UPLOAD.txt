@@ -1,0 +1,195 @@
+============================================
+ARQUIVOS PARA UPLOAD NA HOSTINGER
+============================================
+SOFTEC Website - Mínimo necessário
+
+📁 PASTAS COMPLETAS (fazer upload inteiro):
+============================================
+
+1. ✅ src/                     <-- TODA a pasta
+   - src/app/
+   - src/components/
+   - src/lib/
+   - src/hooks/
+
+2. ✅ prisma/                  <-- TODA a pasta
+   - prisma/schema.prisma
+   - prisma/schema-mysql.prisma
+
+3. ✅ public/                  <-- TODA a pasta
+   - public/uploads/
+   - (e qualquer outro arquivo estático)
+
+
+📄 ARQUIVOS INDIVIDUAIS (na raiz):
+============================================
+
+Arquivos OBRIGATÓRIOS:
+✅ .env.production           (CRIAR com seus dados)
+✅ .htaccess
+✅ next.config.ts
+✅ package.json
+✅ package-lock.json
+✅ tsconfig.json
+
+Arquivos ÚTEIS (opcional, mas recomendado):
+✅ components.json
+✅ tailwind.config.ts
+
+
+🚫 NÃO FAZER UPLOAD:
+============================================
+
+❌ node_modules/           <-- Instalar no servidor com npm install
+❌ .next/                  <-- Criar no servidor com npm run build
+❌ db/                     <-- Não precisa (vamos usar MySQL)
+❌ .env                    <-- Apenas .env.production
+❌ .env.local              <-- Apenas .env.production
+❌ examples/               <-- Não precisa
+❌ skills/                 <-- Não precisa
+❌ worklog.md              <-- Não precisa
+❌ DEPLOY_*.md             <-- Documentação, não precisa
+❌ database-setup.sql      <-- Só usar no phpMyAdmin, não fazer upload
+
+
+📋 ESTRUTURA FINAL NO SERVIDOR (após upload e instalação):
+============================================
+
+public_html/
+├── .env.production              ← CRIAR ESTE arquivo!
+├── .htaccess
+├── next.config.ts
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── components.json              ← opcional
+├── tailwind.config.ts           ← opcional
+│
+├── prisma/
+│   ├── schema.prisma
+│   └── schema-mysql.prisma
+│
+├── src/
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── api/
+│   │       ├── route.ts
+│   │       └── candidaturas/
+│   │           └── route.ts
+│   ├── components/
+│   │   └── ui/
+│   │       ├── accordion.tsx
+│   │       ├── alert-dialog.tsx
+│   │       ├── alert.tsx
+│   │       ├── aspect-ratio.tsx
+│   │       ├── avatar.tsx
+│   │       ├── badge.tsx
+│   │       ├── breadcrumb.tsx
+│   │       ├── button.tsx
+│   │       ├── calendar.tsx
+│   │       ├── card.tsx
+│   │       ├── carousel.tsx
+│   │       ├── chart.tsx
+│   │       ├── checkbox.tsx
+│   │       ├── collapsible.tsx
+│   │       ├── command.tsx
+│   │       ├── context-menu.tsx
+│   │       ├── dialog.tsx
+│   │       ├── drawer.tsx
+│   │       ├── dropdown-menu.tsx
+│   │       ├── form.tsx
+│   │       ├── hover-card.tsx
+│   │       ├── input-otp.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── menubar.tsx
+│   │       ├── navigation-menu.tsx
+│   │       ├── pagination.tsx
+│   │       ├── popover.tsx
+│   │       ├── progress.tsx
+│   │       ├── radio-group.tsx
+│   │       ├── resizable.tsx
+│   │       ├── scroll-area.tsx
+│   │       ├── select.tsx
+│   │       ├── separator.tsx
+│   │       ├── sheet.tsx
+│   │       ├── sidebar.tsx
+│   │       ├── skeleton.tsx
+│   │       ├── slider.tsx
+│   │       ├── sonner.tsx
+│   │       ├── switch.tsx
+│   │       ├── table.tsx
+│   │       ├── tabs.tsx
+│   │       ├── textarea.tsx
+│   │       ├── toast.tsx
+│   │       ├── toaster.tsx
+│   │       ├── toggle-group.tsx
+│   │       ├── toggle.tsx
+│   │       └── tooltip.tsx
+│   ├── hooks/
+│   │   ├── use-mobile.ts
+│   │   └── use-toast.ts
+│   └── lib/
+│       ├── db.ts
+│       ├── email.ts
+│       └── utils.ts
+│
+├── public/
+│   ├── uploads/
+│   │   ├── curriculos/
+│   │   └── .gitkeep
+│   └── (outros arquivos estáticos se houver)
+│
+├── node_modules/              ← Criado automaticamente pelo npm install
+└── .next/                     ← Criado automaticamente pelo npm run build
+
+
+📝 PASSO A PASSO DO UPLOAD:
+============================================
+
+1. Fazer download do projeto do seu computador atual
+   - Compacte as pastas src/, prisma/ e public/
+   - Baixe os arquivos: .htaccess, next.config.ts, package.json, package-lock.json, tsconfig.json
+
+2. No File Manager da Hostinger:
+   - Vá para public_html
+   - Faça upload das 3 pastas (src, prisma, public)
+   - Faça upload dos arquivos individuais
+
+3. Criar arquivo .env.production:
+   - No File Manager, clique em "New File"
+   - Nome: .env.production
+   - Cole o conteúdo (veja UPLOAD_HOSTINGER.md)
+
+4. Através do Terminal ou SSH, rode os comandos (veja UPLOAD_HOSTINGER.md)
+
+
+💡 DICAS:
+============================================
+
+- Use compactação (zip) para upload das pastas grandes
+- Depois faça unzip no servidor
+- Verifique se todas as pastas foram criadas corretamente
+- O arquivo .env.production deve estar na raiz de public_html
+- Não se esqueça de rodar "npm install" no servidor antes de iniciar
+
+
+🔒 ARQUIVO .ENV.PRODUCTION (conteúdo inicial):
+============================================
+
+DATABASE_URL="mysql://usuario:senha@localhost:3306/nome_banco"
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=seu-email@seu-dominio.com
+SMTP_PASS=sua_senha_email
+NOTIFICATION_EMAIL=seu-email@seu-dominio.com
+NEXT_PUBLIC_APP_URL=https://seu-dominio.com
+NODE_ENV=production
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+============================================
+FIM DA LISTA DE ARQUIVOS
+============================================

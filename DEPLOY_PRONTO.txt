@@ -1,0 +1,176 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║          ✅ DEPLOY PRONTO - SOFTEC (softecgv.pt)                       ║
+║              .env.production COMPLETAMENTE CONFIGURADO                 ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+🎉 PARABÉNS! TUDO ESTÁ CONFIGURADO!
+─────────────────────────────────────────────────────────────────────────────
+
+Seu arquivo .env.production está 100% configurado com:
+
+✅ Banco de Dados:
+   - Database: u520816751_Y7X2I
+   - Usuário:  u520816751_BOXVi
+   - Senha:    Softec2026@@
+
+✅ Email SMTP:
+   - Email:    candidatura@softecgv.pt
+   - Senha:    08021999@Lv
+
+✅ Site:
+   - URL:      https://www.softecgv.pt
+
+
+═══════════════════════════════════════════════════════════════════════════
+📋 AGORA SÓ FALTAM 3 PASSOS SIMPLES:
+═══════════════════════════════════════════════════════════════════════════
+
+
+📌 PASSO 1: Configurar Banco de Dados (phpMyAdmin)
+─────────────────────────────────────────────────────────────────────────────
+
+1. Acesse o hPanel da Hostinger
+2. Vá em: Databases > MySQL Databases
+3. Clique em "Manage" no banco: u520816751_Y7X2I
+4. No phpMyAdmin:
+   - Clique na aba "SQL"
+   - ABRA o arquivo: database-setup.sql
+   - Copie todo o conteúdo
+   - Cole no editor SQL
+   - Clique em "Go" ou "Executar"
+
+✅ Se aparecer "BANCO DE DADOS CONFIGURADO COM SUCESSO!", está pronto!
+
+
+📌 PASSO 2: Fazer Upload dos Arquivos (File Manager)
+─────────────────────────────────────────────────────────────────────────────
+
+Acesse o File Manager da Hostinger e vá para: public_html
+
+Fazer upload das 3 PASTAS (inteiras):
+✅ src/
+✅ prisma/
+✅ public/
+
+Fazer upload dos ARQUIVOS (na raiz):
+✅ .env.production          ← TUDO CONFIGURADO! PRONTO PARA UPLOAD!
+✅ .htaccess
+✅ next.config.ts
+✅ package.json
+✅ package-lock.json
+✅ tsconfig.json
+
+
+📌 PASSO 3: Rodar Comandos (Terminal do hPanel)
+─────────────────────────────────────────────────────────────────────────────
+
+Acesse o Terminal do hPanel e COPIE e COLE estes comandos:
+
+cd public_html
+npm install
+mv prisma/schema-mysql.prisma prisma/schema.prisma
+npm install @prisma/adapter-mysql
+npx prisma generate
+mkdir -p public/uploads/curriculos
+chmod 755 public/uploads
+npm install -g pm2
+pm2 start npm --name "softec" -- start
+pm2 save
+pm2 startup
+
+✅ Após o último comando, copie e cole o comando que aparecer!
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ TESTE FINAL
+═══════════════════════════════════════════════════════════════════════════
+
+1. Acesse: https://www.softecgv.pt
+2. Preencha o formulário de candidaturas
+3. Faça upload de um currículo
+4. Clique em "Enviar Candidatura"
+5. Verifique o email: candidatura@softecgv.pt
+
+🎉 SE TUDO FUNCIONOU, PARABÉNS! SITE NO AR!
+
+
+═══════════════════════════════════════════════════════════════════════════
+📄 CONTEÚDO DO SEU .ENV.PRODUCTION
+═══════════════════════════════════════════════════════════════════════════
+
+DATABASE_URL="mysql://u520816751_BOXVi:Softec2026@@@localhost:3306/u520816751_Y7X2I"
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=candidatura@softecgv.pt
+SMTP_PASS=08021999@Lv
+NOTIFICATION_EMAIL=candidatura@softecgv.pt
+NEXT_PUBLIC_APP_URL=https://www.softecgv.pt
+NODE_ENV=production
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+
+═══════════════════════════════════════════════════════════════════════════
+🔧 COMANDOS ÚTEIS (DEPOIS DO DEPLOY)
+═══════════════════════════════════════════════════════════════════════════
+
+Ver status:     pm2 status
+Ver logs:       pm2 logs softec
+Reiniciar:      pm2 restart softec
+Parar:          pm2 stop softec
+
+
+═══════════════════════════════════════════════════════════════════════════
+🐛 SOLUÇÃO DE PROBLEMAS
+═══════════════════════════════════════════════════════════════════════════
+
+❌ Site não carrega (erro 500):
+   → pm2 logs softec
+   → Verifique se o banco foi configurado no phpMyAdmin
+
+❌ Erro: Cannot connect to database:
+   → Execute o script database-setup.sql no phpMyAdmin
+   → Teste: npx prisma db pull
+
+❌ Upload não funciona:
+   → chmod 755 public/uploads
+   → mkdir -p public/uploads/curriculos
+
+❌ Não recebe email:
+   → Verifique se o email candidatura@softecgv.pt existe
+   → Verifique a senha no .env.production
+   → Teste enviando email pela conta
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ CHECKLIST FINAL
+═══════════════════════════════════════════════════════════════════════════
+
+[ ] Banco configurado no phpMyAdmin (database-setup.sql executado)
+[ ] Pasta src/ uploadada
+[ ] Pasta prisma/ uploadada
+[ ] Pasta public/ uploadada
+[ ] .env.production uploadado (100% configurado!)
+[ ] .htaccess uploadado
+[ ] next.config.ts uploadado
+[ ] package.json uploadado
+[ ] package-lock.json uploadado
+[ ] tsconfig.json uploadado
+[ ] npm install executado
+[ ] schema-mysql.prisma renomeado
+[ ] @prisma/adapter-mysql instalado
+[ ] npx prisma generate executado
+[ ] Pasta public/uploads/ criada
+[ ] Permissões configuradas (chmod 755)
+[ ] pm2 instalado
+[ ] pm2 start executado
+[ ] pm2 save e pm2 startup configurados
+[ ] Site acessível: https://www.softecgv.pt
+[ ] Formulário testado
+[ ] Email recebido em: candidatura@softecgv.pt
+
+
+═══════════════════════════════════════════════════════════════════════════
+   🚀 TUDO PRONTO! SÓ PRECISA FAZER O UPLOAD E RODAR OS COMANDOS!
+═══════════════════════════════════════════════════════════════════════════

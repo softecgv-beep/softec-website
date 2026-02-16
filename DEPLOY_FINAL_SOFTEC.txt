@@ -1,0 +1,294 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║          🚀 DEPLOY FINAL - SOFTEC (softecgv.pt)                        ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+📋 SUAS CREDENCIAIS:
+═══════════════════════════════════════════════════════════════════════════
+
+Site: https://www.softecgv.pt
+
+Banco de Dados:
+  Database: u520816751_Y7X2I
+  Usuário:  u520816751_BOXVi
+  Senha:    Softec2026@@
+  Host:     localhost
+  Porta:    3306
+
+✅ ESTAS INFORMAÇÕES JÁ ESTÃO NO ARQUIVO .env.production
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ ETAPA 1: CONFIGURAR O BANCO DE DADOS (phpMyAdmin)
+═══════════════════════════════════════════════════════════════════════════
+
+1. Acesse o hPanel da Hostinger
+2. Vá em: Databases > MySQL Databases
+3. Procure o banco: u520816751_Y7X2I
+4. Clique em "Manage" (isso abre o phpMyAdmin)
+5. No phpMyAdmin:
+   - Na lateral esquerda, clique no banco: u520816751_Y7X2I
+   - Clique na aba "SQL" no topo
+   - ABRA o arquivo: database-setup.sql (do seu projeto)
+   - COPIE todo o conteúdo do arquivo
+   - COLE no editor SQL do phpMyAdmin
+   - Clique em "Go" ou "Executar"
+
+✅ Se aparecer "BANCO DE DADOS CONFIGURADO COM SUCESSO!", está pronto!
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ ETAPA 2: CRIAR EMAIL PARA NOTIFICAÇÕES
+═══════════════════════════════════════════════════════════════════════════
+
+1. Acesse: hPanel > Emails > Create Email Account
+2. Configure:
+   - Email: contato@softecgv.pt (ou outro que preferir)
+   - Password: crie uma senha forte (anote!)
+   - Mailbox quota: deixe padrão ou aumente se necessário
+3. Clique em "Create"
+
+4. ATUALIZE o arquivo .env.production com esses dados:
+   - Substitua: seu-email@softecgv.pt
+   - Substitua: sua-senha-de-email
+   - Pelo email e senha que acabou de criar
+
+IMPORTANTE: O arquivo .env.production já está no seu projeto com os dados do banco!
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ ETAPA 3: FAZER UPLOAD DOS ARQUIVOS (File Manager)
+═══════════════════════════════════════════════════════════════════════════
+
+Acesse o File Manager da Hostinger:
+1. Vá para a pasta: public_html
+2. Faça upload destas 3 PASTAS (inteiras):
+
+   ✅ src/
+      - Toda a pasta com subpastas
+
+   ✅ prisma/
+      - Inclui: schema.prisma, schema-mysql.prisma
+
+   ✅ public/
+      - Inclui: uploads/, .gitkeep, etc.
+
+3. Faça upload destes ARQUIVOS (na raiz de public_html):
+
+   ✅ .env.production           ← JÁ CONFIGURADO COM SEU BANCO!
+   ✅ .htaccess
+   ✅ next.config.ts
+   ✅ package.json
+   ✅ package-lock.json
+   ✅ tsconfig.json
+   ✅ components.json           (se tiver)
+   ✅ tailwind.config.ts        (se tiver)
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ ETAPA 4: EXECUTAR COMANDOS NO TERMINAL
+═══════════════════════════════════════════════════════════════════════════
+
+Acesse o Terminal do hPanel (ou SSH) e COPIE e COLE estes comandos:
+
+─────────────────────────────────────────────────────────────────────────────
+# Ir para a pasta do site
+cd public_html
+
+# Instalar dependências do Node.js
+npm install
+
+# Substituir schema pelo do MySQL
+mv prisma/schema-mysql.prisma prisma/schema.prisma
+
+# Instalar adapter MySQL do Prisma
+npm install @prisma/adapter-mysql
+
+# Gerar Prisma Client
+npx prisma generate
+
+# Criar pasta para uploads de currículos
+mkdir -p public/uploads/curriculos
+
+# Configurar permissões da pasta de uploads
+chmod 755 public/uploads
+
+# Instalar PM2 (para rodar o site em background)
+npm install -g pm2
+
+# Iniciar o site com PM2
+pm2 start npm --name "softec" -- start
+
+# Salvar configuração do PM2
+pm2 save
+
+# Configurar PM2 para iniciar automaticamente
+pm2 startup
+─────────────────────────────────────────────────────────────────────────────
+
+✅ Após rodar o último comando, copie o comando que aparecer e cole de novo!
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ ETAPA 5: VERIFICAR SE TUDO FUNCIONOU
+═══════════════════════════════════════════════════════════════════════════
+
+1. Acesse no navegador: https://www.softecgv.pt
+   → O site deve carregar normalmente
+
+2. Teste o formulário de candidaturas:
+   - Preencha com dados de teste
+   - Faça upload de um currículo (PDF/DOC)
+   - Clique em "Enviar Candidatura"
+   → Deve aparecer mensagem de sucesso
+
+3. Verifique se recebeu email:
+   - Abra o email que você criou na etapa 2
+   → Deve ter recebido notificação da candidatura
+
+
+═══════════════════════════════════════════════════════════════════════════
+📋 CONTEÚDO DO SEU .env.production
+═══════════════════════════════════════════════════════════════════════════
+
+O arquivo .env.production já está configurado assim:
+
+DATABASE_URL="mysql://u520816751_BOXVi:Softec2026@@@localhost:3306/u520816751_Y7X2I"
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=seu-email@softecgv.pt           ← ATUALIZAR ESTE
+SMTP_PASS=sua-senha-de-email               ← ATUALIZAR ESTE
+NOTIFICATION_EMAIL=seu-email@softecgv.pt   ← ATUALIZAR ESTE
+NEXT_PUBLIC_APP_URL=https://www.softecgv.pt
+NODE_ENV=production
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+⚠ Você só precisa atualizar as 3 linhas do email!
+
+
+═══════════════════════════════════════════════════════════════════════════
+🔧 COMANDOS ÚTEIS (APÓS O DEPLOY)
+═══════════════════════════════════════════════════════════════════════════
+
+Verificar se o site está rodando:
+  pm2 status
+
+Ver logs da aplicação (erros, etc.):
+  pm2 logs softec
+
+Reiniciar o site (após atualizações):
+  pm2 restart softec
+
+Parar o site:
+  pm2 stop softec
+
+Iniciar o site novamente:
+  pm2 start softec
+
+Ver processos rodando:
+  pm2 list
+
+
+═══════════════════════════════════════════════════════════════════════════
+🔄 COMO ATUALIZAR O SITE FUTURAMENTE
+═══════════════════════════════════════════════════════════════════════════
+
+Quando fizer alterações no site:
+
+1. Faça upload dos arquivos alterados (File Manager)
+2. No Terminal:
+   cd public_html
+   npm install
+   npm run build
+   pm2 restart softec
+
+Isso aplicará as atualizações!
+
+
+═══════════════════════════════════════════════════════════════════════════
+🐛 SOLUÇÃO DE PROBLEMAS
+═══════════════════════════════════════════════════════════════════════════
+
+❌ Site não carrega (erro 500):
+   → pm2 logs softec
+   → Veja o erro nos logs
+   → Verifique se .env.production está correto
+   → Verifique se o banco de dados foi criado
+
+❌ Erro: Cannot connect to database:
+   → Verifique se executou o script SQL no phpMyAdmin
+   → Teste: npx prisma db pull
+   → Verifique credenciais no .env.production
+
+❌ Upload de currículo não funciona:
+   → chmod 755 public/uploads
+   → mkdir -p public/uploads/curriculos
+
+❌ Não recebe email:
+   → Verifique se configurou o email SMTP no .env.production
+   → Teste enviando email manual pela conta
+   → Verifique se a senha está correta
+
+❌ PM2 não reconhece comando:
+   → npm install -g pm2
+   → pm2 start npm --name "softec" -- start
+
+❌ Erro de módulo não encontrado:
+   → cd public_html
+   → rm -rf node_modules package-lock.json
+   → npm install
+   → npm run build
+
+
+═══════════════════════════════════════════════════════════════════════════
+✅ CHECKLIST FINAL
+═══════════════════════════════════════════════════════════════════════════
+
+Marque conforme completa:
+
+[ ] Banco u520816751_Y7X2I acessado no phpMyAdmin
+[ ] Script database-setup.sql executado com sucesso
+[ ] Email criado no hPanel (ex: contato@softecgv.pt)
+[ ] .env.production atualizado com dados do email
+[ ] Pasta src/ uploadada para public_html
+[ ] Pasta prisma/ uploadada para public_html
+[ ] Pasta public/ uploadada para public_html
+[ ] Arquivo .env.production uploadado para public_html
+[ ] Arquivo .htaccess uploadado para public_html
+[ ] Arquivo next.config.ts uploadado para public_html
+[ ] Arquivo package.json uploadado para public_html
+[ ] Arquivo package-lock.json uploadado para public_html
+[ ] Arquivo tsconfig.json uploadado para public_html
+[ ] npm install executado no servidor
+[ ] schema-mysql.prisma renomeado para schema.prisma
+[ ] @prisma/adapter-mysql instalado
+[ ] npx prisma generate executado
+[ ] Pasta public/uploads/criada com permissão 755
+[ ] pm2 instalado globalmente
+[ ] pm2 start executado (site rodando)
+[ ] pm2 save e pm2 startup configurados
+[ ] Site acessível em: https://www.softecgv.pt
+[ ] Formulário de candidaturas testado
+[ ] Upload de currículo funcionando
+[ ] Email de notificação recebido
+
+🎉 TODOS OS ITENS MARCADOS? PARABÉNS! SITE NO AR!
+
+
+═══════════════════════════════════════════════════════════════════════════
+📞 AJUDA
+═══════════════════════════════════════════════════════════════════════════
+
+Hostinger Support: https://support.hostinger.com
+Prisma Docs: https://www.prisma.io/docs
+Next.js Docs: https://nextjs.org/docs
+
+Se tiver dúvidas, leia também:
+- UPLOAD_HOSTINGER.md (guia detalhado)
+- GUIA_RAPIDO_HOSTINGER.txt (versão visual)
+
+
+═══════════════════════════════════════════════════════════════════════════
+   BOA SORTE! SEU SITE SOFTEGV.PT ESTÁ QUASE NO AR! 🚀
+═══════════════════════════════════════════════════════════════════════════

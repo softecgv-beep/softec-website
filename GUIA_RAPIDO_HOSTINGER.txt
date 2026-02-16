@@ -1,0 +1,186 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                  🚀 GUIA RÁPIDO - HOSTINGER SOFTEC                      ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+✅ ETAPA 1: CRIAR BANCO DE DADOS
+═══════════════════════════════════════════════════════════════════════════
+
+1. Acesse hPanel > Databases > MySQL Databases
+2. Clique em "Create"
+3. Preencha:
+   - Database name: softec_db
+   - Username: softec_user
+   - Password: [crie senha forte]
+4. Clique em "Create"
+5. Clique em "Manage" (abre phpMyAdmin)
+6. No phpMyAdmin:
+   - Selecione o banco criado (lateral esquerda)
+   - Clique em "SQL"
+   - Copie o conteúdo do arquivo: database-setup.sql
+   - Cole no editor SQL
+   - Clique em "Go" / "Executar"
+
+✅ Feito! Banco criado.
+
+
+✅ ETAPA 2: FAZER UPLOAD DOS ARQUIVOS
+═══════════════════════════════════════════════════════════════════════════
+
+No File Manager da Hostinger (pasta public_html):
+
+1. Fazer upload destas 3 PASTAS (toda a pasta):
+   ✅ src/
+   ✅ prisma/
+   ✅ public/
+
+2. Fazer upload destes ARQUIVOS (na raiz):
+   ✅ .htaccess
+   ✅ next.config.ts
+   ✅ package.json
+   ✅ package-lock.json
+   ✅ tsconfig.json
+   ✅ components.json (se tiver)
+   ✅ tailwind.config.ts (se tiver)
+
+3. Criar arquivo .env.production:
+   ✅ Clique em "New File"
+   ✅ Nome: .env.production
+   ✅ Cole o conteúdo do arquivo .env.production.template
+   ✅ Substitua pelos seus dados reais (banco e email)
+
+✅ Feito! Arquivos no servidor.
+
+
+✅ ETAPA 3: RODAR COMANDOS NO TERMINAL
+═══════════════════════════════════════════════════════════════════════════
+
+Acesse Terminal no hPanel (ou SSH) e rode:
+
+─────────────────────────────────────────────────────────────────────────────
+cd public_html
+npm install
+mv prisma/schema-mysql.prisma prisma/schema.prisma
+npm install @prisma/adapter-mysql
+npx prisma generate
+mkdir -p public/uploads/curriculos
+chmod 755 public/uploads
+npm install -g pm2
+pm2 start npm --name "softec" -- start
+pm2 save
+pm2 startup
+─────────────────────────────────────────────────────────────────────────────
+
+✅ Feito! Site rodando!
+
+
+✅ ETAPA 4: VERIFICAR
+═══════════════════════════════════════════════════════════════════════════
+
+1. Acesse: https://seu-dominio.com
+2. Preencha o formulário de candidatura
+3. Verifique se recebeu o email
+
+✅ Tudo funcionando!
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                       ARQUIVOS DISPONÍVEIS                                ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📄 database-setup.sql           ← Script SQL para o phpMyAdmin
+📄 .env.production.template     ← Template do arquivo de configuração
+📄 UPLOAD_HOSTINGER.md          ← Guia detalhado
+📄 ARQUIVOS_UPLOAD.txt          ← Lista completa de arquivos
+📄 DEPLOY_RAPIDO.md             ← Guia rápido
+📄 DEPLOY_HOSTINGER.md          ← Documentação completa
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                   O QUE COLOCAR NO .ENV.PRODUCTION                        ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+DATABASE_URL="mysql://USUARIO:SENHA@localhost:3306/NOME_BANCO"
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=seu-email@seu-dominio.com
+SMTP_PASS=SUA_SENHA_DE_EMAIL
+NOTIFICATION_EMAIL=seu-email@seu-dominio.com
+NEXT_PUBLIC_APP_URL=https://seu-dominio.com
+NODE_ENV=production
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                       COMANDOS ÚTEIS                                     ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Ver logs:
+  pm2 logs softec
+
+Reiniciar:
+  pm2 restart softec
+
+Parar:
+  pm2 stop softec
+
+Status:
+  pm2 status
+
+Atualizar site:
+  - Fazer upload dos arquivos atualizados
+  - cd public_html
+  - npm install
+  - npm run build
+  - pm2 restart softec
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                       PROBLEMAS COMUNS                                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+❌ Erro 500:
+   → pm2 logs softec
+   → Verifique se .env.production está correto
+
+❌ Banco não conecta:
+   → Verifique DATABASE_URL no .env.production
+   → Teste: npx prisma db pull
+
+❌ Upload não funciona:
+   → chmod 755 public/uploads
+   → mkdir -p public/uploads/curriculos
+
+❌ Módulo não encontrado:
+   → cd public_html
+   → rm -rf node_modules package-lock.json
+   → npm install
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                       CHECKLIST FINAL                                     ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+[ ] Banco de dados criado
+[ ] Script SQL executado no phpMyAdmin
+[ ] Pastas src/, prisma/, public/ uploadadas
+[ ] Arquivos .htaccess, next.config.ts, etc. uploadados
+[ ] .env.production criado e configurado
+[ ] npm install executado
+[ ] schema-mysql.prisma renomeado
+[ ] @prisma/adapter-mysql instalado
+[ ] npx prisma generate executado
+[ ] Pasta public/uploads/ criada com permissões
+[ ] pm2 start executado
+[ ] pm2 save e pm2 startup executados
+[ ] Site acessível no domínio
+[ ] Formulário de candidatura testado
+[ ] Email recebido com sucesso
+
+🎉 TUDO PRONTO!
+
+
+═══════════════════════════════════════════════════════════════════════════
+   Para dúvidas mais detalhadas, leia o arquivo UPLOAD_HOSTINGER.md
+═══════════════════════════════════════════════════════════════════════════
