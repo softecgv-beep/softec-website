@@ -4,8 +4,6 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
-  // Não usar Turbopack
-  turbopack: false,
 };
 
 module.exports = nextConfig;
