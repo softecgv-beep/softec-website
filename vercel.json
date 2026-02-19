@@ -1,7 +1,0 @@
-{
-  "buildCommand": "NEXT_PRIVATE_TURBOPACK=0 npm run build",
-  "devCommand": "NEXT_PRIVATE_TURBOPACK=0 npm run dev",
-  "installCommand": "npm install --legacy-peer-deps",
-  "framework": "nextjs",
-  "outputDirectory": ".next"
-}
